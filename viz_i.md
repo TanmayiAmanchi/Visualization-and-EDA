@@ -252,3 +252,97 @@ weather_df %>%
     ## (`geom_point()`).
 
 ![](viz_i_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+## Univariate plots
+
+Histograms are really great
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin)) +
+  geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Can we add color…
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, fill=name)) +
+  geom_histogram(position = "dodge") +
+  facet_grid(.~name)
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+Let’s try a new geometry
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin,fill=name)) +
+  geom_density(alpha=0.3)
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+What about box plots
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=name, y=tmin,)) +
+  geom_boxplot()
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+Trendy plots
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=name, y=tmin, fill=name)) +
+  geom_violin(alpha =0.5) +
+  stat_summary(fun = "median")
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_ydensity()`).
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_summary()`).
+
+    ## Warning: Removed 3 rows containing missing values or values outside the scale range
+    ## (`geom_segment()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+Ridge plots… the most popular plot of 2017
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=name)) +
+  geom_density_ridges()
+```
+
+    ## Picking joint bandwidth of 1.41
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_density_ridges()`).
+
+![](viz_i_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->

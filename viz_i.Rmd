@@ -118,3 +118,48 @@ weather_df %>%
     geom_density2d()+
   geom_point(alpha= 0.3)
 ```
+
+## Univariate plots
+Histograms are really great
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin)) +
+  geom_histogram()
+```
+
+Can we add color...
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, fill=name)) +
+  geom_histogram(position = "dodge") +
+  facet_grid(.~name)
+```
+
+Let's try a new geometry
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin,fill=name)) +
+  geom_density(alpha=0.3)
+```
+
+What about box plots
+```{r}
+weather_df %>% 
+  ggplot(aes(x=name, y=tmin,)) +
+  geom_boxplot()
+```
+
+Trendy plots
+```{r}
+weather_df %>% 
+  ggplot(aes(x=name, y=tmin, fill=name)) +
+  geom_violin(alpha =0.5) +
+  stat_summary(fun = "median")
+```
+
+Ridge plots... the most popular plot of 2017
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=name)) +
+  geom_density_ridges()
+```
