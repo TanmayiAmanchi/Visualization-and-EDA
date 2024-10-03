@@ -74,4 +74,17 @@ weather_df |>
   count(name)
 ```
 
-
+#@ 2x2
+```{r}
+weather_df |> 
+  drop_na(tmax) |> 
+  mutate(
+    cold = case_when(
+      tmax <  5 ~ "cold",
+      tmax >= 5 ~ "not_cold",
+      TRUE      ~ ""
+  )) |> 
+  filter(name != "Molokai_HI") |> 
+  group_by(name, cold) |> 
+    summarize(count = n())
+```

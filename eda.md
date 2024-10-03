@@ -166,3 +166,31 @@ weather_df |>
     ## 1 CentralPark_NY   730
     ## 2 Molokai_HI       730
     ## 3 Waterhole_WA     730
+
+\#@ 2x2
+
+``` r
+weather_df |> 
+  drop_na(tmax) |> 
+  mutate(
+    cold = case_when(
+      tmax <  5 ~ "cold",
+      tmax >= 5 ~ "not_cold",
+      TRUE      ~ ""
+  )) |> 
+  filter(name != "Molokai_HI") |> 
+  group_by(name, cold) |> 
+    summarize(count = n())
+```
+
+    ## `summarise()` has grouped output by 'name'. You can override using the
+    ## `.groups` argument.
+
+    ## # A tibble: 4 × 3
+    ## # Groups:   name [2]
+    ##   name           cold     count
+    ##   <chr>          <chr>    <int>
+    ## 1 CentralPark_NY cold        96
+    ## 2 CentralPark_NY not_cold   634
+    ## 3 Waterhole_WA   cold       319
+    ## 4 Waterhole_WA   not_cold   395
