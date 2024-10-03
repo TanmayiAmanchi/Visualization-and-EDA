@@ -129,3 +129,59 @@ weather_df |>
     theme(legend.position = "bottom")
 ```
 
+##Grouped mutates
+```{r}
+weather_df |>
+  group_by(name) |>
+  mutate(mean_tmax = mean(tmax, na.rm = TRUE))
+```
+
+```{r}
+weather_df |>
+  group_by(name) |>
+  mutate(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    centered_tmax = tmax - mean_tmax) |> 
+  ggplot(aes(x = date, y = centered_tmax, color = name)) + 
+    geom_point() 
+```
+
+Find hottest/coldest days
+```{r}
+weather_df |>
+  group_by(name, month) |>
+  mutate(temp_ranking = min_rank(tmax))
+```
+
+Filtering data based on rank. We could, for example, keep only the day with the lowest max temperature within each month:
+```{r}
+weather_df |>
+  group_by(name, month) |>
+  filter(min_rank(tmax) < 2)
+```
+
+Keep the three days with the highest max temperature:
+```{r}
+weather_df |>
+  group_by(name, month) |>
+  filter(min_rank(desc(tmax)) < 4) |>
+  arrange(tmax)
+```
+
+Lag function
+```{r}
+weather_df |>
+  group_by(name) |>
+  mutate(temp_change = tmax - lag(tmax))
+```
+
+Quantify the day-by-day variability in max temperature, or to identify the largest one-day increase:
+```{r}
+weather_df |>
+  group_by(name) |>
+  mutate(temp_change = tmax - lag(tmax)) |>
+  summarize(
+    temp_change_sd = sd(temp_change, na.rm = TRUE),
+    temp_change_max = max(temp_change, na.rm = TRUE))
+```
+
