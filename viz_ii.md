@@ -421,3 +421,60 @@ tmax_date_p =
     ## (`geom_point()`).
 
 ![](viz_ii_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+## Data manipulation
+
+Control your factors
+
+``` r
+weather_df %>% 
+  mutate(
+    name = factor(name),
+    name = forcats::fct_relevel(name, c("Waikiki_HA"))
+  ) %>% 
+  ggplot(aes(y = tmax, x = name, fill = name)) +
+  geom_violin(alpha = .5)
+```
+
+    ## Warning: There was 1 warning in `mutate()`.
+    ## ℹ In argument: `name = forcats::fct_relevel(name, c("Waikiki_HA"))`.
+    ## Caused by warning:
+    ## ! 1 unknown level in `f`: Waikiki_HA
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_ydensity()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+What if I wanted densities for tmin and tmax simultaneously?
+
+``` r
+weather_df %>% 
+  filter(name == "CentralPark_NY") %>% 
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperatures"
+  ) %>% 
+  ggplot(aes(x = temperatures, fill=observation)) +
+  geom_density(alpha = .5)
+```
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+``` r
+weather_df %>% 
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperatures"
+  ) %>% 
+  ggplot(aes(x = temperatures, fill=observation)) +
+  geom_density(alpha = .5) +
+  facet_grid(.~name)
+```
+
+    ## Warning: Removed 34 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
