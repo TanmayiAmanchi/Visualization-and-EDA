@@ -122,3 +122,81 @@ weather_df %>%
     discrete= TRUE)
 ```
 
+## Themes
+Shift the legend
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme(legend.position = "bottom")
+```
+
+Change the overall theme
+Adds black line box around 
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_bw()
+```
+
+Removes grid line outside plot
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_minimal()
+```
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_minimal() +
+  theme(legen.positon = "bottom")
+```
+
+
+
+
+
+
+
+
+

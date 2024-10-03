@@ -212,3 +212,99 @@ weather_df %>%
     ## (`geom_point()`).
 
 ![](viz_ii_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+## Themes
+
+Shift the legend
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme(legend.position = "bottom")
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+Change the overall theme Adds black line box around
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_bw()
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+Removes grid line outside plot
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_minimal()
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color=name))+
+  geom_point(alpha=0.5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from the rnoaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete= TRUE) +
+  theme_minimal() +
+  theme(legen.positon = "bottom")
+```
+
+    ## Warning in plot_theme(plot): The `legen.positon` theme element is not defined
+    ## in the element hierarchy.
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](viz_ii_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
