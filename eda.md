@@ -194,3 +194,98 @@ weather_df |>
     ## 2 CentralPark_NY not_cold   634
     ## 3 Waterhole_WA   cold       319
     ## 4 Waterhole_WA   not_cold   395
+
+## General numeric summaries
+
+Lets try some other useful summaries
+
+``` r
+weather_df |>
+  group_by(month) |>
+  summarize(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    mean_prec = mean(prcp, na.rm = TRUE),
+    median_tmax = median(tmax),
+    sd_tmax = sd(tmax))
+```
+
+    ## # A tibble: 24 × 5
+    ##    month      mean_tmax mean_prec median_tmax sd_tmax
+    ##    <date>         <dbl>     <dbl>       <dbl>   <dbl>
+    ##  1 2021-01-01     10.9       39.5         5     12.2 
+    ##  2 2021-02-01      9.82      42.6         2.8   12.2 
+    ##  3 2021-03-01     13.7       55.5        NA     NA   
+    ##  4 2021-04-01     16.8       14.7        18.0    9.29
+    ##  5 2021-05-01     19.6       17.3        22.2    9.40
+    ##  6 2021-06-01     24.3       14.1        28.3    8.28
+    ##  7 2021-07-01     25.2       30.7        28.3    6.19
+    ##  8 2021-08-01     25.2       30.6        28.3    6.72
+    ##  9 2021-09-01     22.4       35.4        24.4    7.69
+    ## 10 2021-10-01     18.2       36.0        20.6   10.1 
+    ## # ℹ 14 more rows
+
+summarize and them plot…
+
+``` r
+weather_df |>
+  group_by(month) |>
+  summarize(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    mean_prec = mean(prcp, na.rm = TRUE),
+    median_tmax = median(tmax),
+    sd_tmax = sd(tmax))
+```
+
+    ## # A tibble: 24 × 5
+    ##    month      mean_tmax mean_prec median_tmax sd_tmax
+    ##    <date>         <dbl>     <dbl>       <dbl>   <dbl>
+    ##  1 2021-01-01     10.9       39.5         5     12.2 
+    ##  2 2021-02-01      9.82      42.6         2.8   12.2 
+    ##  3 2021-03-01     13.7       55.5        NA     NA   
+    ##  4 2021-04-01     16.8       14.7        18.0    9.29
+    ##  5 2021-05-01     19.6       17.3        22.2    9.40
+    ##  6 2021-06-01     24.3       14.1        28.3    8.28
+    ##  7 2021-07-01     25.2       30.7        28.3    6.19
+    ##  8 2021-08-01     25.2       30.6        28.3    6.72
+    ##  9 2021-09-01     22.4       35.4        24.4    7.69
+    ## 10 2021-10-01     18.2       36.0        20.6   10.1 
+    ## # ℹ 14 more rows
+
+``` r
+weather_df |>
+  group_by(name, month) |>
+  summarize(across(tmin:prcp, mean))
+```
+
+    ## `summarise()` has grouped output by 'name'. You can override using the
+    ## `.groups` argument.
+
+    ## # A tibble: 72 × 5
+    ## # Groups:   name [3]
+    ##    name           month       tmin  tmax  prcp
+    ##    <chr>          <date>     <dbl> <dbl> <dbl>
+    ##  1 CentralPark_NY 2021-01-01 -1.15  4.27  18.9
+    ##  2 CentralPark_NY 2021-02-01 -1.39  3.87  46.6
+    ##  3 CentralPark_NY 2021-03-01  3.1  12.3   28.0
+    ##  4 CentralPark_NY 2021-04-01  7.48 17.6   22.8
+    ##  5 CentralPark_NY 2021-05-01 12.2  22.1   35.7
+    ##  6 CentralPark_NY 2021-06-01 18.9  28.1   22.2
+    ##  7 CentralPark_NY 2021-07-01 20.6  28.4   90.9
+    ##  8 CentralPark_NY 2021-08-01 21.8  28.8   84.5
+    ##  9 CentralPark_NY 2021-09-01 17.8  24.8   84.9
+    ## 10 CentralPark_NY 2021-10-01 13.4  19.9   43.1
+    ## # ℹ 62 more rows
+
+``` r
+weather_df |>
+  group_by(name, month) |>
+  summarize(mean_tmax = mean(tmax, na.rm = TRUE)) |>
+  ggplot(aes(x = month, y = mean_tmax, color = name)) + 
+    geom_point() + geom_line() + 
+    theme(legend.position = "bottom")
+```
+
+    ## `summarise()` has grouped output by 'name'. You can override using the
+    ## `.groups` argument.
+
+![](eda_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
