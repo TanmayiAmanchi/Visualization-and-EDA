@@ -48,3 +48,30 @@ weather_df |>
   ggplot(aes(x = tmin, y = tmax, color = name, shape = name)) + 
   geom_point(alpha = .75)
 ```
+
+## Group_by()
+```{r}
+weather_df |>
+  group_by(name, month)
+```
+
+counting stuff
+```{r}
+weather_df |>
+  group_by(month) |>
+  summarize(
+    n_obs= n(),
+    n_dist = n_distinct(month))
+```
+
+```{r}
+weather_df |> 
+  filter(prcp >= 1000)
+```
+
+```{r}
+weather_df |>
+  count(name)
+```
+
+
